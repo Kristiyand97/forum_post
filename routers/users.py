@@ -1,5 +1,6 @@
 from fastapi import APIRouter, status, HTTPException
 import services.user_service
+from common.authentication import create_access_token
 # from common.authentication import create_access_token
 from common.responses import BadRequest
 from data.schemas import UserCreate, UserOut, UserLogin
@@ -29,6 +30,6 @@ def login(user_credentials: UserLogin):
     if not verify_password(user_credentials.password, user.password):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Invalid Credentials")
 
-    # access_token = create_access_token(data={"user_id": user.id})
+    access_token = create_access_token(data={"user_id": user.id})
 
-    return {"access_token": "access_token", "token_type": "bearer"}
+    return {"access_token": access_token, "token_type": "bearer"}

@@ -19,6 +19,5 @@ class User(BaseModel):
 
 
 
-
-
-
+class Topic(BaseModel):
+    pass

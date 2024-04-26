@@ -1,5 +1,5 @@
+from datetime import datetime
 from typing import Optional
-
 from pydantic import BaseModel, EmailStr
 
 
@@ -26,4 +26,15 @@ class Token(BaseModel):
 
 
 class TokenData(BaseModel):
-    id: Optional[str]
+    id: str
+
+
+class TopicCreate(BaseModel):
+    name: str
+    category_id: int
+
+
+class Topic(BaseModel):
+    name: str
+    category_id: int
+    created_at: Optional[datetime] = None

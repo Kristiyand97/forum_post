@@ -24,7 +24,7 @@ class User(BaseModel):
 class Topic(BaseModel):
     topic_name: str
     category_id: int
-    user_id: Optional[int] = None
+    user_id: int
     best_reply_id: Optional[int] = None
     is_locked: Optional[bool] = False
 

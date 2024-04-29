@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, HTTPException
 import services.user_services
-from common.authentication import create_access_token
+from common.authorization import create_access_token
 from common.responses import BadRequest
 from data.schemas import UserCreate, UserOut, UserLogin
 from security.password_hashing import get_password_hash, verify_password

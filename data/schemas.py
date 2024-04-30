@@ -52,3 +52,18 @@ class CategoryOut(CreateCategory):
     name: str
     id: int
     created_at: str
+
+
+class ReplyCreate(BaseModel):
+    content: str
+    topic_id: int
+
+
+class ReplyOut(BaseModel):
+    content: str
+    topic_id: int
+
+
+class UserReply(BaseModel):
+    user_id: int
+    reply_id: int

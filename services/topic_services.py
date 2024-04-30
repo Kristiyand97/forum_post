@@ -5,18 +5,6 @@ from data.models import Topic
 from data.schemas import TopicCreate
 
 
-# def create(name: str) -> Topic | None:
-#     try:
-#         generated_id = insert_query(
-#             'INSERT INTO topic(topic_name) VALUES (?)',
-#             (name,))
-#         return Topic(id=generated_id, name=name)
-#
-#     except IntegrityError as e:
-#         # Here you could log the error message
-#         print(f"An error occurred: {e}")
-#         return None
-
 
 def category_exists(category_id: int) -> bool:
     result = read_query('SELECT id FROM category WHERE id = ?', (category_id,))

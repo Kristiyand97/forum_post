@@ -54,6 +54,32 @@ class CategoryOut(CreateCategory):
     created_at: str
 
 
+class ViewCategory(BaseModel):
+    id: int
+    name: str
+    created_at: datetime
+
+
+class ViewTopicsInCategory(BaseModel):
+    topic_id: int
+    topic_name: str
+    category_id: int
+    created_at: datetime
+
+
+class ViewTopic(BaseModel):
+    id: int
+    topic_name: str
+    category_id: int
+    created_at: datetime
+
+
+class ViewReply(BaseModel):
+    id: int
+    content: str
+    created_at: datetime
+
+
 class ReplyCreate(BaseModel):
     content: str
     topic_id: int

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, Depends, HTTPException
 
-from common import authentication
+from common import authorization
 from data import schemas
 from data.schemas import CreateCategory
 from services import category_services
@@ -8,9 +8,8 @@ from services import category_services
 categories_router = APIRouter(prefix='/categories')
 
 
-
 @categories_router.post('/create', status_code=status.HTTP_201_CREATED)
-def create_category(category: CreateCategory, current_user: int = Depends(authentication.get_current_user)):
+def create_category(category: CreateCategory, current_user: int = Depends(authorization.get_current_user)):
     if current_user is None:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
                             detail="User ID not found. User may not be authenticated.")

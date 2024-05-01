@@ -1,6 +1,6 @@
 from mariadb import IntegrityError
 
-from data.database_queries import insert_query, read_query
+from data.database_queries import insert_query, read_query, update_query
 from data.schemas import ReplyCreate, UserReply
 
 
@@ -21,3 +21,9 @@ def create(content: str, topic_id: int, user_id: int) -> ReplyCreate | None:
         return None
 
 
+def change_vote_status(reply_id, vote_status, current_user_id):
+    vote_data = update_query('update votes set status = ? where reply_id = ? and user_id = ? ',
+                             (vote_status, reply_id, current_user_id))
+
+    # return True if update query was successful
+    return vote_data

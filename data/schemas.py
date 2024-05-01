@@ -93,3 +93,25 @@ class ReplyOut(BaseModel):
 class UserReply(BaseModel):
     user_id: int
     reply_id: int
+
+
+class UpdateReply(BaseModel):
+    reply_id: int
+    status: str
+
+
+class CreateMessage(BaseModel):
+    content: str
+    receiver_id: int
+
+
+class Message(BaseModel):
+    id: int
+    created_at: Optional[datetime] = None
+    content: str
+    receiver_id: int
+    sender_id: int
+
+
+class BestReply(BaseModel):
+    best_reply_id: int

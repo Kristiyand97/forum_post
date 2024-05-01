@@ -1,6 +1,6 @@
 from mariadb import IntegrityError
 
-from data.database_queries import insert_query, read_query
+from data.database_queries import insert_query, read_query, update_query
 from data.models import Topic
 from data.schemas import TopicCreate, ViewTopic, ViewReply
 
@@ -74,3 +74,10 @@ def create(topic_name: str, category_id: int, user_id: int) -> Topic | None:
     except IntegrityError as e:
         print(f"An error occurred: {e}")
         return None
+
+
+def update_best_reply(topic_id: int, reply_id: int, owner_id: int):
+    reply_data = update_query('update topic set best_reply_id=? where id = ? and user_id = ?',
+                              (reply_id, topic_id, owner_id))
+
+    return reply_data

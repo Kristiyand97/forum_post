@@ -54,6 +54,32 @@ class CategoryOut(CreateCategory):
     created_at: str
 
 
+class ViewCategory(BaseModel):
+    id: int
+    name: str
+    created_at: datetime
+
+
+class ViewTopicsInCategory(BaseModel):
+    topic_id: int
+    topic_name: str
+    category_id: int
+    created_at: datetime
+
+
+class ViewTopic(BaseModel):
+    id: int
+    topic_name: str
+    category_id: int
+    created_at: datetime
+
+
+class ViewReply(BaseModel):
+    id: int
+    content: str
+    created_at: datetime
+
+
 class ReplyCreate(BaseModel):
     content: str
     topic_id: int
@@ -67,3 +93,25 @@ class ReplyOut(BaseModel):
 class UserReply(BaseModel):
     user_id: int
     reply_id: int
+
+
+class UpdateReply(BaseModel):
+    reply_id: int
+    status: str
+
+
+class CreateMessage(BaseModel):
+    content: str
+    receiver_id: int
+
+
+class Message(BaseModel):
+    id: int
+    created_at: Optional[datetime] = None
+    content: str
+    receiver_id: int
+    sender_id: int
+
+
+class BestReply(BaseModel):
+    best_reply_id: int

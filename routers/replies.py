@@ -1,10 +1,26 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from common import authorization
-from data.schemas import ReplyCreate
+from data.schemas import ReplyCreate, UpdateReply
 from services import reply_services
 
 replies_router = APIRouter(prefix='/replies')
+
+
+@replies_router.put('/')
+def update_vote_on_reply(update_reply: UpdateReply, current_user_id: int = Depends(authorization.get_current_user)
+
+                         ):
+    if not current_user_id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail="User ID not found. User may not be authenticated.")
+
+    reply = reply_services.change_vote_status(update_reply.reply_id, update_reply.status, current_user_id)
+
+    if not reply:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Reply vote cannot be updated!")
+
+    return f"You {update_reply.status}d reply with id: {update_reply.reply_id}"
 
 
 @replies_router.post('/create', status_code=status.HTTP_201_CREATED)

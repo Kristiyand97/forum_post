@@ -115,3 +115,8 @@ class Message(BaseModel):
 
 class BestReply(BaseModel):
     best_reply_id: int
+
+
+class ChangeCategoryVisibility(BaseModel):
+    is_private: bool
+    is_locked: bool

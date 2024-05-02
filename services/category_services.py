@@ -8,17 +8,21 @@ def view_all_categories():
 
 
 def view_topics_in_category(category_id: int, search: str = None, sort: str = None, pagination: int = None):
-    category = read_query('select id from category where id=?',
-                          sql_params=(category_id,))
+    category_data = read_query('select id,is_private from category where id=?',
+                               sql_params=(category_id,))
+    # category_users_data = read_query('select user_id from category_has_user where category_id=?', (category_id,))
+    # category_users = [u for u in category_users_data]
 
     topics = read_query('select id,topic_name,category_id,created_at from topic where category_id=?',
                         sql_params=(category_id,))
 
-    # check if category with this id exists
-    if not category:
+    is_private = category_data[0][1]
+
+    # check if category_data with this id exists
+    if not category_data:
         return f'Category with id: {category_id} does not exist!'
 
-    # check if category is empty(without topics)
+    # check if category_data is empty(without topics)
     if not topics:
         return f'Category with id: {category_id} is empty!'
 

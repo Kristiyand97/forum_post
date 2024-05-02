@@ -72,7 +72,14 @@ def change_visibility(category_id: int, is_private: bool, is_locked: bool, curre
     is_admin = admin_data[0][0]
     if not is_admin:
         return 'not admin'
-
+    old_category_data = read_query('SELECT is_private, is_locked FROM category WHERE id = ?', (category_id,))
+    if not old_category_data:
+        return None
+    old_is_private, old_is_locked = old_category_data[0]
     category_visibility = update_category(category_id, is_private, is_locked)  # return True or False
 
-    return category_visibility
+    return {
+        'visibility_changed': old_is_private != is_private,
+        'lock_status_changed': old_is_locked != is_locked,
+        'update_successful': category_visibility
+    }

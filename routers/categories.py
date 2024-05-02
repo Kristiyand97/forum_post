@@ -59,4 +59,13 @@ def change_visibility(category_id: int, change_category: schemas.ChangeCategoryV
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
                             detail='Only ADMIN users can change category visibility!')
 
-    return f'Visibility on Category with id: {category_id} is successfully changed!'
+    messages = []
+    if category_visibility['visibility_changed']:
+        messages.append('Visibility status changed.')
+    if category_visibility['lock_status_changed']:
+        messages.append('Lock status changed.')
+    if not messages:
+        messages.append('No changes were made.')
+
+    return ' '.join(messages)
+

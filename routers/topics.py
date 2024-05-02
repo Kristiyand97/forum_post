@@ -38,8 +38,11 @@ def create_topic(topic: schemas.TopicCreate, current_user: int = Depends(authori
                             detail="User ID not found. User may not be authenticated.")
     new_topic = topic_services.create(topic.name, topic.category_id, current_user)
 
+    if isinstance(new_topic, str):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=new_topic)
+
     if new_topic is None:
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="The topic could not be created.")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"No existing category with id {topic.category_id}")
 
     return new_topic.dict(exclude_none=True)
 

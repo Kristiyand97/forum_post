@@ -60,20 +60,19 @@ def category_exists(category_id: int) -> bool:
 
 
 def create(topic_name: str, category_id: int, user_id: int) -> Topic | None:
-    if not category_exists(category_id):
-        print(f"Category ID {category_id} does not exist.")
-        return None
+    check_category = read_query('SELECT is_locked from category WHERE id = ?', (category_id,))
+    if not check_category:
+        return f"No existing category with id {category_id}"
+    category_status = check_category[0][0]
 
-    try:
-        generated_id = insert_query(
-            'INSERT INTO topic(topic_name, category_id, user_id) VALUES (?, ?, ?)',
-            (topic_name, category_id, user_id))
-        return Topic(id=generated_id, topic_name=topic_name, category_id=category_id, user_id=user_id,
-                     best_reply_id=None)
+    if category_status:
+        return f"New topic cannot be created. The category is locked"
 
-    except IntegrityError as e:
-        print(f"An error occurred: {e}")
-        return None
+    generated_id = insert_query(
+        'INSERT INTO topic(topic_name, category_id, user_id) VALUES (?, ?, ?)',
+        (topic_name, category_id, user_id))
+    return Topic(id=generated_id, topic_name=topic_name, category_id=category_id, user_id=user_id,
+                 best_reply_id=None)
 
 
 def update_best_reply(topic_id: int, reply_id: int, owner_id: int):

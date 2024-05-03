@@ -120,3 +120,21 @@ class BestReply(BaseModel):
 class ChangeCategoryVisibility(BaseModel):
     is_private: bool
     is_locked: bool
+
+
+class ViewConversation(BaseModel):
+    id: int
+    created_at: datetime
+    content: str
+    receiver_id: int
+    sender_id: int
+
+    @classmethod
+    def from_query_result(cls, id, created_at, content, receiver_id, sender_id):
+        return cls(
+            id=id,
+            created_at=created_at,
+            content=content,
+            receiver_id=receiver_id,
+            sender_id=sender_id
+        )

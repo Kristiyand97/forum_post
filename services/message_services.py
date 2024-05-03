@@ -1,7 +1,7 @@
 from mariadb import IntegrityError
 
 from data.database_queries import insert_query, read_query
-from data.schemas import Message
+from data.schemas import Message, ViewConversation
 from datetime import datetime
 
 
@@ -21,21 +21,9 @@ def create_message(content: str, receiver_id: int, sender_id: int):
 def get_conversations(current_user: int):
     messages = read_query('SELECT * FROM messages WHERE sender_id = ? OR receiver_id = ?', (current_user, current_user))
 
-    other_user_ids = set()
-    for message in messages:
-        if message['sender_id'] == current_user:
-            other_user_ids.add(message['receiver_id'])
-        else:
-            other_user_ids.add(message['sender_id'])
-    other_users = []
-    for user_id in other_user_ids:
-        user = read_query('SELECT * FROM users WHERE id = ?', (user_id,))
-        other_users.append(user)
-
-    return other_users
+    return (ViewConversation.from_query_result(*message) for message in messages)
 
 
-def get_conversation_with_user(current_user: int, other_user: int):
-    messages = read_query('SELECT * FROM messages WHERE (sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND '
-                          'receiver_id = ?)', (current_user, other_user, other_user, current_user))
-    return messages
+def get_conversation_with_user(current_user: int):
+    messages = read_query('SELECT * FROM messages WHERE sender_id = ?', (current_user,))
+    return (ViewConversation.from_query_result(*message) for message in messages)

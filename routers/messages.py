@@ -1,6 +1,7 @@
 from fastapi import APIRouter, status, Depends, HTTPException
 from common import authorization
-from data import schemas
+from data import schemas, models
+from typing import List
 from services import message_services
 
 messages_router = APIRouter(prefix='/messages')
@@ -19,3 +20,21 @@ def create_message(message: schemas.CreateMessage, current_user: int = Depends(a
                             detail="The message could not be created.")
 
     return new_message
+
+
+@messages_router.get('/conversations/{other_user_id}', response_model=List[schemas.Message])
+def view_conversation(other_user_id: int, current_user: int = Depends(authorization.get_current_user)):
+    if current_user is None:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail="User ID not found. User may not be authenticated.")
+    conversation = message_services.get_conversation_with_user(current_user, other_user_id)
+    return conversation
+
+
+@messages_router.get('/conversations', response_model=List[models.User])
+def view_conversations(current_user: int = Depends(authorization.get_current_user)):
+    if current_user is None:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail="User ID not found. User may not be authenticated.")
+    conversations = message_services.get_conversations(current_user)
+    return conversations

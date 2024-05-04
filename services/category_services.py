@@ -7,24 +7,37 @@ def view_all_categories():
     return (ViewCategory(id=id, name=name, created_at=created_at) for id, name, created_at in category_data)
 
 
-def view_topics_in_category(category_id: int, search: str = None, sort: str = None, pagination: int = None):
+def view_topics_in_category(category_id: int, current_user, search: str = None, sort: str = None, pagination: int = 1):
+    page_size = 10
+    pages_offset = (pagination - 1) * page_size
+
     category_data = read_query('select id,is_private from category where id=?',
                                sql_params=(category_id,))
-    # category_users_data = read_query('select user_id from category_has_user where category_id=?', (category_id,))
-    # category_users = [u for u in category_users_data]
 
-    topics = read_query('select id,topic_name,category_id,created_at from topic where category_id=?',
-                        sql_params=(category_id,))
+    category_has_user_data = read_query(
+        'select access_type from category_has_user where category_id = ? and user_id = ?',
+        (category_id, current_user,))
 
-    is_private = category_data[0][1]
+    if not category_has_user_data:
+        return 'invalid user'
+
+    user_access = category_has_user_data[0][0]
+
+    if user_access == 'banned':
+        return 'banned user'
 
     # check if category_data with this id exists
     if not category_data:
         return f'Category with id: {category_id} does not exist!'
 
-    # check if category_data is empty(without topics)
+    topics = read_query('select id,topic_name,category_id,created_at from topic where category_id=? limit ? offset ?',
+                        sql_params=(category_id, page_size, pages_offset,))
+
+    is_private = category_data[0][1]
+
+    # check if page exists
     if not topics:
-        return f'Category with id: {category_id} is empty!'
+        return f'invalid page'
 
     if search:
         topics = read_query(
@@ -54,6 +67,11 @@ def create(name: str, is_private: bool, is_locked: bool, current_user: int):
     generated_id = insert_query(
         'INSERT INTO category(name, is_private, is_locked) VALUES(?, ?, ?)',
         (name, is_private, is_locked))
+
+    # insert creator of category and category_id into junction table category_has_user
+    insert_query('insert into category_has_user (category_id, user_id) values (?,?)',
+                 (generated_id, current_user,))
+
     created_at_result = read_query('SELECT created_at FROM category WHERE id = ?', (generated_id,))
     created_at = created_at_result[0][0].strftime("%Y-%m-%d %H:%M:%S")
 
@@ -87,3 +105,24 @@ def change_visibility(category_id: int, is_private: bool, is_locked: bool, curre
         'lock_status_changed': old_is_locked != is_locked,
         'update_successful': category_visibility
     }
+
+
+def revoke_access(category_id: int, user_id: int, access_type: str):
+    access_type_params = ['read access', 'write access', 'read and write access', 'banned']
+
+    if access_type not in access_type_params:
+        return 'invalid access type'
+
+    change_user_access_type_data = update_query(
+        'update category_has_user set access_type = ? where category_id = ? and user_id = ?',
+        (access_type, category_id, user_id))
+
+    access_type_data = read_query('select access_type from category_has_user where category_id = ? and user_id = ?',
+                                  (category_id, user_id,))
+
+    if not access_type_data:
+        return 'invalid access'
+
+    access_type = access_type_data[0][0]
+
+    return access_type

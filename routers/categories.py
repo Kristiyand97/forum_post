@@ -2,7 +2,7 @@ from fastapi import APIRouter, status, Depends, HTTPException
 
 from common import authorization
 from data import schemas
-from data.schemas import CreateCategory, ChangeCategoryVisibility
+from data.schemas import CreateCategory, ChangeCategoryVisibility, RevokeAccess
 from services import category_services
 
 categories_router = APIRouter(prefix='/categories')
@@ -15,11 +15,21 @@ def view_all_categories():
 
 
 @categories_router.get('/{category_id}')
-def view_category(category_id: int, search: str = None, sort: str = None, pagination: int = None):
-    category_with_topics = category_services.view_topics_in_category(category_id, search, sort, pagination)
+def view_category(category_id: int, search: str = None, sort: str = None, pagination: int = 1,
+                  current_user: int = Depends(authorization.get_current_user)):
+    category_with_topics = category_services.view_topics_in_category(category_id, current_user, search, sort,
+                                                                     pagination)
 
     if not category_with_topics:
         raise HTTPException(status_code=404, detail=category_with_topics)
+    elif category_with_topics == 'banned user':
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail=f'User is banned from category with id: {category_id}')
+    elif category_with_topics == 'invalid user':
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f'User with id: {current_user} is not a member of this category!')
+    elif category_with_topics == 'invalid page':
+        raise HTTPException(status_code=404, detail='Invalid page!')
     elif category_with_topics == 'wrong search parameter':
         raise HTTPException(status_code=404, detail=f"Topic with name: '{search}' does not exist!")
     elif category_with_topics == 'wrong sort parameter':
@@ -69,3 +79,21 @@ def change_visibility(category_id: int, change_category: schemas.ChangeCategoryV
 
     return ' '.join(messages)
 
+
+@categories_router.put('/revoke_access/{category_id}')
+def revoke_user_access(category_id: int, revoke_access: RevokeAccess,
+                       current_user: int = Depends(authorization.get_current_user)):
+    if current_user is None:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail="User ID not found. User may not be authenticated.")
+
+    revoke_access_result = category_services.revoke_access(category_id, revoke_access.user_id,
+                                                           revoke_access.access_type)
+    if not revoke_access_result:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Invalid operation!')
+    elif revoke_access_result == 'invalid access type':
+        available_access_types = 'read access, write access, read and write access, banned'
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail=f'Invalid access type, try: {available_access_types}!')
+
+    return f'Access type: {revoke_access.access_type.upper()} set on user with id: {revoke_access.user_id}'

@@ -24,6 +24,6 @@ def get_conversations(current_user: int):
     return (ViewConversation.from_query_result(*message) for message in messages)
 
 
-def get_conversation_with_user(current_user: int):
-    messages = read_query('SELECT * FROM messages WHERE sender_id = ?', (current_user,))
+def get_conversation_with_user(receiver_id: int, current_user):
+    messages = read_query('SELECT * FROM messages WHERE receiver_id = ? AND sender_id = ?', (receiver_id, current_user))
     return (ViewConversation.from_query_result(*message) for message in messages)

@@ -22,12 +22,12 @@ def create_message(message: schemas.CreateMessage, current_user: int = Depends(a
     return new_message
 
 
-@messages_router.get('/conversations/{current_user}')
-def view_conversation(current_user: int = Depends(authorization.get_current_user)):
+@messages_router.get('/conversations/{receiver_id}')
+def view_conversation(receiver_id: int, current_user: int = Depends(authorization.get_current_user)):
     if current_user is None:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
                             detail="User ID not found. User may not be authenticated.")
-    conversation = message_services.get_conversation_with_user(current_user)
+    conversation = message_services.get_conversation_with_user(receiver_id, current_user)
     return conversation
 
 

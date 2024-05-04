@@ -138,3 +138,8 @@ class ViewConversation(BaseModel):
             receiver_id=receiver_id,
             sender_id=sender_id
         )
+
+
+class RevokeAccess(BaseModel):
+    user_id: int
+    access_type: str

@@ -5,8 +5,15 @@ from data.models import Topic
 from data.schemas import TopicCreate, ViewTopic, ViewReply
 
 
-def get_all_topics(search: str = None, sort: str = None, pagination: int = None):
-    topics_data = read_query('select id,topic_name,category_id,created_at from topic')
+def get_all_topics(search: str = None, sort: str = None, pagination: int = 1):
+    page_size = 10
+    pages_offset = (pagination - 1) * page_size
+
+    topics_data = read_query('select id,topic_name,category_id,created_at from topic limit ? offset ?',
+                             (page_size, pages_offset,))
+
+    if not topics_data:
+        return 'invalid page'
 
     if search:
         topics_data = read_query('select id,topic_name,category_id,created_at from topic where topic_name = ?',

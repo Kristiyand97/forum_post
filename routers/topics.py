@@ -8,9 +8,11 @@ topics_router = APIRouter(prefix='/topics')
 
 
 @topics_router.get('/')
-def get_all_topics(search: str = None, sort: str = None, pagination: int = None):
+def get_all_topics(search: str = None, sort: str = None, pagination: int = 1):
     topics_result = topic_services.get_all_topics(search, sort, pagination)
 
+    if topics_result == 'invalid page':
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Invalid page!')
     if topics_result == 'wrong search parameter':
         raise HTTPException(status_code=404,
                             detail=f"Topic 'search' parameter is wrong, try with existing topic name!")
@@ -42,7 +44,8 @@ def create_topic(topic: schemas.TopicCreate, current_user: int = Depends(authori
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=new_topic)
 
     if new_topic is None:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"No existing category with id {topic.category_id}")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail=f"No existing category with id {topic.category_id}")
 
     return new_topic.dict(exclude_none=True)
 

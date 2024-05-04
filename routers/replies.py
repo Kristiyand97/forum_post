@@ -32,5 +32,11 @@ def create_reply(reply: ReplyCreate, current_user: int = Depends(authorization.g
 
     if new_reply is None:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="The reply could not be created.")
+    elif new_reply == 'invalid topic data':
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"Topic with id: {reply.topic_id} does not exist!")
+    elif new_reply == 'topic is locked':
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail=f'Topic with id:{reply.topic_id} is locked! You cannot post reply on locked topic!')
 
     return new_reply.dict(exclude_none=True)

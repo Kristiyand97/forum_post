@@ -63,3 +63,24 @@ def update_best_reply(topic_id: int, best_reply: schemas.BestReply,
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Setting best reply failed!')
 
     return f"Best reply was set successfully on topic with id: {topic_id}!"
+
+
+@topics_router.put('/lock/{topic_id}')
+def lock_topic(topic_id: int, is_locked: schemas.LockTopic,
+               current_user: int = Depends(authorization.get_current_user)):
+    if current_user is None:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail="User ID not found. User may not be authenticated.")
+
+    lock_topic_result = topic_services.lock_topic(topic_id, is_locked.is_locked, current_user)
+
+    if lock_topic_result == 'not admin':
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail='Only admins can change lock status on topic!')
+    elif lock_topic_result == 'not valid topic':
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'Topic with id: {topic_id} does not exist!')
+    elif lock_topic_result == 'is locked is already set':
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail=f'Lock status: {is_locked.is_locked} is already set!')
+
+    return f'Successfully update lock status: {is_locked.is_locked} on topic with id: {topic_id}'

@@ -4,7 +4,17 @@ from data.database_queries import insert_query, read_query, update_query
 from data.schemas import ReplyCreate, UserReply
 
 
-def create(content: str, topic_id: int, user_id: int) -> ReplyCreate | None:
+def create(content: str, topic_id: int, user_id: int) -> ReplyCreate | None | str:
+    is_locked_topic_data = read_query('select is_locked from topic where id = ?', (topic_id,))
+
+    if not is_locked_topic_data:
+        return 'invalid topic data'
+
+    is_locked = is_locked_topic_data[0][0]
+
+    if is_locked:
+        return 'topic is locked'
+
     try:
         generated_id = insert_query(
             'INSERT INTO reply(content, topic_id) VALUES (?, ?)',

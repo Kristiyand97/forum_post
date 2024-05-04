@@ -143,3 +143,7 @@ class ViewConversation(BaseModel):
 class RevokeAccess(BaseModel):
     user_id: int
     access_type: str
+
+
+class LockTopic(BaseModel):
+    is_locked: bool

@@ -87,3 +87,32 @@ def update_best_reply(topic_id: int, reply_id: int, owner_id: int):
                               (reply_id, topic_id, owner_id))
 
     return reply_data
+
+
+def lock_topic(topic_id: int, is_locked: bool, current_user: int):
+    admin_data = read_query('select is_admin from user where id = ?', (current_user,))
+
+    # check if current user is admin
+    if not admin_data:
+        return 'not admin'
+
+    # check if is_locked attribute exists
+    is_locked_topic_data = read_query('select is_locked from topic where id = ?', (topic_id,))
+
+    if not is_locked_topic_data:
+        return 'not valid topic'
+
+    is_locked_topic = is_locked_topic_data[0][0]
+
+    # check if current topic lock status is already set. For example: if is_locked is true on current topic,
+    # and we try to set it again to true, it will return "is locked is already set"
+
+    if is_locked_topic == is_locked:
+        return 'is locked is already set'
+
+    lock_topic_data = update_query('update topic set is_locked = ? where id = ?', (is_locked, topic_id,))
+
+    if not lock_topic_data:
+        return 'not valid topic'
+
+    return lock_topic_data

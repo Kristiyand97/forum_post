@@ -80,14 +80,17 @@ class ViewReply(BaseModel):
     created_at: datetime
 
 
-class ReplyCreate(BaseModel):
+class CreateReply(BaseModel):
+    category_id: int
     content: str
     topic_id: int
+
 
 
 class ReplyOut(BaseModel):
     content: str
     topic_id: int
+    created_at: datetime
 
 
 class UserReply(BaseModel):
@@ -142,4 +145,8 @@ class ViewConversation(BaseModel):
 
 class RevokeAccess(BaseModel):
     user_id: int
+    access_type: str
+
+
+class Access(BaseModel):
     access_type: str

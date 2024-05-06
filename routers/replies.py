@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from common import authorization
-from data.schemas import ReplyCreate, UpdateReply
+from data.schemas import UpdateReply, CreateReply
 from services import reply_services
 
 replies_router = APIRouter(prefix='/replies')
@@ -24,13 +24,15 @@ def update_vote_on_reply(update_reply: UpdateReply, current_user_id: int = Depen
 
 
 @replies_router.post('/create', status_code=status.HTTP_201_CREATED)
-def create_reply(reply: ReplyCreate, current_user: int = Depends(authorization.get_current_user)):
+def create_reply(reply: CreateReply, current_user: int = Depends(authorization.get_current_user)):
     if current_user is None:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
                             detail="User ID not found. User may not be authenticated.")
-    new_reply = reply_services.create(reply.content, reply.topic_id, current_user)
+    new_reply = reply_services.create(reply.content, reply.topic_id, current_user, reply.category_id)
 
     if new_reply is None:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="The reply could not be created.")
+    if isinstance(new_reply, str):
+        return new_reply
 
     return new_reply.dict(exclude_none=True)

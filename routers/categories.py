@@ -2,8 +2,9 @@ from fastapi import APIRouter, status, Depends, HTTPException
 
 from common import authorization
 from data import schemas
-from data.schemas import CreateCategory, ChangeCategoryVisibility, RevokeAccess
+from data.schemas import CreateCategory, ChangeCategoryVisibility, RevokeAccess, Access
 from services import category_services
+from services.category_services import give_read_access, give_write_access
 
 categories_router = APIRouter(prefix='/categories')
 
@@ -96,4 +97,21 @@ def revoke_user_access(category_id: int, revoke_access: RevokeAccess,
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail=f'Invalid access type, try: {available_access_types}!')
 
-    return f'Access type: {revoke_access.access_type.upper()} set on user with id: {revoke_access.user_id}'
+    return f'Access type: {revoke_access.access_type.upper()} has been revoked from user with id: {revoke_access.user_id}'
+
+
+# @categories_router.put('/{category_id}/users/{user_id}/access')
+# def change_user_access(category_id: int, user_id: int, access: Access, current_user: int = Depends(authorization.get_current_user)):
+#     if access.access_type == 'read':
+#         result = give_read_access(category_id, user_id, current_user)
+#     elif access.access_type == 'write':
+#         result = give_write_access(category_id, user_id, current_user)
+#     else:
+#         result = 'invalid access type'
+#
+#     if result == 'not admin':
+#         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='Only ADMIN users can change user access!')
+#     elif result == 'invalid access type' or result == 'invalid access':
+#         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=result)
+#     return {'access_type': result}
+

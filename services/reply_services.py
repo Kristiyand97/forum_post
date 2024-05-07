@@ -1,34 +1,29 @@
+from datetime import datetime
+
 from mariadb import IntegrityError
 
 from data.database_queries import insert_query, read_query, update_query
-from data.schemas import ReplyCreate, UserReply
+from data.schemas import UserReply, ReplyOut
 
 
-def create(content: str, topic_id: int, user_id: int) -> ReplyCreate | None | str:
-    is_locked_topic_data = read_query('select is_locked from topic where id = ?', (topic_id,))
+def create(content: str, topic_id: int, user_id: int, category_id):
+    check_user_access = read_query('SELECT access_type from category_has_user WHERE user_id = ? AND category_id = ?', (user_id, category_id))
+    user_access = check_user_access[0][0]
 
-    if not is_locked_topic_data:
-        return 'invalid topic data'
+    if user_access == 'read access':
+        return f"user with id {user_id} has read only access"
 
-    is_locked = is_locked_topic_data[0][0]
+    generated_id = insert_query(
+        'INSERT INTO reply(content, topic_id) VALUES (?, ?)',
+        (content, topic_id))
 
-    if is_locked:
-        return 'topic is locked'
+    insert_query(
+        'INSERT INTO votes(user_id, reply_id) VALUES (?, ?)', (user_id, generated_id))
 
-    try:
-        generated_id = insert_query(
-            'INSERT INTO reply(content, topic_id) VALUES (?, ?)',
-            (content, topic_id))
+    created_at_result = read_query('SELECT created_at FROM reply WHERE id = ?', (generated_id,))
+    created_at = created_at_result[0][0].strftime("%Y-%m-%d %H:%M:%S")
 
-        insert_query(
-            'INSERT INTO votes(user_id, reply_id) VALUES (?, ?)', (user_id, generated_id))
-
-        return ReplyCreate(id=generated_id, content=content, topic_id=topic_id)
-
-    except (IntegrityError, Exception) as e:
-
-        print(f"An error occurred: {e}")
-        return None
+    return ReplyOut(id=generated_id, content=content, topic_id=topic_id, created_at=created_at)
 
 
 def change_vote_status(reply_id, vote_status, current_user_id):

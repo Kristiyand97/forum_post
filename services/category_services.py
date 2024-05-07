@@ -113,16 +113,67 @@ def revoke_access(category_id: int, user_id: int, access_type: str):
     if access_type not in access_type_params:
         return 'invalid access type'
 
+    # Add the user to the category
+    add_member_result = add_category_member(category_id, user_id, access_type)
+    if add_member_result != 'User added to category successfully':
+        return add_member_result
+
     change_user_access_type_data = update_query(
         'update category_has_user set access_type = ? where category_id = ? and user_id = ?',
         (access_type, category_id, user_id))
 
-    access_type_data = read_query('select access_type from category_has_user where category_id = ? and user_id = ?',
-                                  (category_id, user_id,))
-
-    if not access_type_data:
+    if not change_user_access_type_data:
         return 'invalid access'
 
+    access_type_data = read_query('select access_type from category_has_user where category_id = ? and user_id = ?',
+                                  (category_id, user_id,))
     access_type = access_type_data[0][0]
 
     return access_type
+
+# def give_read_access(category_id: int, user_id: int, current_user: int):
+#     admin_data = read_query('select is_admin from user where id=?', (current_user,))
+#     is_admin = admin_data[0][0]
+#     if not is_admin:
+#         return "not admin"
+#
+#     access_type = 'read access'
+#     add_member_result = add_category_member((category_id, user_id, access_type))
+#     if add_member_result != 'User added to category successfully':
+#         return add_member_result
+#
+#     return revoke_access(category_id, user_id, access_type)
+#
+#
+# def give_write_access(category_id: int, user_id: int, current_user: int):
+#     admin_data = read_query('select is_admin from user where id=?', (current_user,))
+#     is_admin = admin_data[0][0]
+#     if not is_admin:
+#         return "not admin"
+#
+#     access_type = 'write access'
+#     add_member_result = add_category_member((category_id, user_id, access_type))
+#     if add_member_result != 'User added to category successfully':
+#         return add_member_result
+#
+#     return revoke_access(category_id, user_id, access_type)
+
+
+
+def add_category_member(category_id: int, user_id: int, access_type: str):
+    # check if the user is already a member of the category
+    existing_member_data = read_query('select * from category_has_user where category_id=? and user_id=?',
+                                      (category_id, user_id,))
+    if existing_member_data:
+        # if the user is already a member, update their access type
+        update_query('update category_has_user set access_type=? where category_id=? and user_id=?',
+                     (access_type, category_id, user_id))
+        return 'User access type updated successfully'
+
+    # if the user is not a member, add them to the category
+    add_member_data = update_query('insert into category_has_user (category_id, user_id, access_type) values (?, ?, ?)',
+                                   (category_id, user_id, access_type))
+    if not add_member_data:
+        return 'Failed to add user to category'
+
+    return 'User added to category successfully'

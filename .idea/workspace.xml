@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e5d6143b-0c63-424a-8fed-1fe2cadf1bec" name="Changes" comment="Revoke access functionality has been refactored.&#10;A new method add_category_member has been created." />
+    <list default="true" id="e5d6143b-0c63-424a-8fed-1fe2cadf1bec" name="Changes" comment="Revoke access functionality has been refactored.&#10;A new method add_category_member has been created.">
+      <change beforePath="$PROJECT_DIR$/.idea/forum_post.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/forum_post.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/category_services.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/category_services.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -89,8 +94,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.__main__" />
       <item itemvalue="Python.main" />
+      <item itemvalue="Python.__main__" />
     </list>
     <recent_temporary>
       <list>

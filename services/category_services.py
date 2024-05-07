@@ -108,7 +108,7 @@ def change_visibility(category_id: int, is_private: bool, is_locked: bool, curre
 
 
 def revoke_access(category_id: int, user_id: int, access_type: str):
-    access_type_params = ['read access', 'write access', 'read and write access', 'banned']
+    access_type_params = ['read access', 'read and write access', 'banned']
 
     if access_type not in access_type_params:
         return 'invalid access type'
@@ -130,6 +130,7 @@ def revoke_access(category_id: int, user_id: int, access_type: str):
     access_type = access_type_data[0][0]
 
     return access_type
+
 
 # def give_read_access(category_id: int, user_id: int, current_user: int):
 #     admin_data = read_query('select is_admin from user where id=?', (current_user,))
@@ -157,7 +158,6 @@ def revoke_access(category_id: int, user_id: int, access_type: str):
 #         return add_member_result
 #
 #     return revoke_access(category_id, user_id, access_type)
-
 
 
 def add_category_member(category_id: int, user_id: int, access_type: str):

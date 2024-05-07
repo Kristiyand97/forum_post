@@ -4,19 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e5d6143b-0c63-424a-8fed-1fe2cadf1bec" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/forum_post.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/forum_post.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/forum_project_2.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/connection.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/connection.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/schemas.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/replies.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/replies.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/topics.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/topics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/reply_services.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/reply_services.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/topic_services.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/topic_services.py" afterDir="false" />
-    </list>
+    <list default="true" id="e5d6143b-0c63-424a-8fed-1fe2cadf1bec" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

@@ -1,5 +1,5 @@
 from data.database_queries import insert_query, update_query, read_query
-from data.schemas import CreateCategory, CategoryOut, ViewCategory, ViewTopicsInCategory, ChangeCategoryVisibility
+from data.schemas import CreateCategory, CategoryOut, ViewCategory, ViewTopicsInCategory, ChangeCategoryVisibility,ViewPrivilegedUser
 
 
 def view_all_categories():
@@ -177,3 +177,41 @@ def add_category_member(category_id: int, user_id: int, access_type: str):
         return 'Failed to add user to category'
 
     return 'User added to category successfully'
+
+
+def view_privileged_users(category_id: int, current_user: int):
+    # check if user is admin
+    is_admin_data = read_query('select is_admin from user where id = ?', (current_user,))
+    if not is_admin_data:
+        return 'invalid user id'
+
+    is_admin = is_admin_data[0][0]
+
+    if not is_admin:
+        return 'not admin'
+
+    # check if category is private
+    is_private_data = read_query('select is_private from category where id = ?', (category_id,))
+    if not is_private_data:
+        return 'invalid category'
+
+    is_private = is_private_data[0][0]
+
+    if not is_private:
+        return 'not private'
+
+    category_has_user_data = read_query('select user_id, access_type from category_has_user where category_id = ?',
+                                        (category_id,))
+
+    # get users_ids and their access_type from current category
+    users_ids = [u[0] for u in category_has_user_data]
+    access_types = [a[1] for a in category_has_user_data]
+    users_usernames = []
+
+    # create list of usernames from users_ids
+    for user_id in users_ids:
+        users_usernames_data = read_query('select username from user where id = ?', (user_id,))
+        users_usernames.append(users_usernames_data[0][0])
+
+    return (ViewPrivilegedUser(username=username, access_type=access_type) for username, access_type in
+            zip(users_usernames, access_types))

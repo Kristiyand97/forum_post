@@ -4,6 +4,7 @@ from common import authorization
 from data import schemas
 from data.schemas import CreateCategory, ChangeCategoryVisibility, RevokeAccess, Access
 from services import category_services
+
 # from services.category_services import give_read_access, give_write_access
 
 categories_router = APIRouter(prefix='/categories')
@@ -100,6 +101,27 @@ def revoke_user_access(category_id: int, revoke_access: RevokeAccess,
     return f'Access type: {revoke_access.access_type.upper()} has been revoked from user with id: {revoke_access.user_id}'
 
 
+@categories_router.get('/privileged_users/{category_id}')
+def view_privileged_users(category_id: int, current_user: int = Depends(authorization.get_current_user)):
+    if current_user is None:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail="User ID not found. User may not be authenticated.")
+
+    privileged_user_result = category_services.view_privileged_users(category_id, current_user)
+
+    if privileged_user_result == 'invalid user id':
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'User with id: {current_user} is not found')
+    elif privileged_user_result == 'not admin':
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail=f'User with id: {current_user} is not admin of this category!')
+    elif privileged_user_result == 'invalid category':
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'Category with id: {category_id} not found!')
+    elif privileged_user_result == 'not private':
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail=f'Category with id: {category_id} is NOT private!')
+
+    return privileged_user_result
+
 # @categories_router.put('/{category_id}/users/{user_id}/access')
 # def change_user_access(category_id: int, user_id: int, access: Access, current_user: int = Depends(authorization.get_current_user)):
 #     if access.access_type == 'read':
@@ -114,4 +136,3 @@ def revoke_user_access(category_id: int, revoke_access: RevokeAccess,
 #     elif result == 'invalid access type' or result == 'invalid access':
 #         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=result)
 #     return {'access_type': result}
-

@@ -153,3 +153,7 @@ class Access(BaseModel):
 
 class LockTopic(BaseModel):
     is_locked:bool
+
+class ViewPrivilegedUser(BaseModel):
+    username: str | None
+    access_type: str | None

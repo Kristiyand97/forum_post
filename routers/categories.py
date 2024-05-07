@@ -4,7 +4,7 @@ from common import authorization
 from data import schemas
 from data.schemas import CreateCategory, ChangeCategoryVisibility, RevokeAccess, Access
 from services import category_services
-from services.category_services import give_read_access, give_write_access
+# from services.category_services import give_read_access, give_write_access
 
 categories_router = APIRouter(prefix='/categories')
 

@@ -150,3 +150,6 @@ class RevokeAccess(BaseModel):
 
 class Access(BaseModel):
     access_type: str
+
+class LockTopic(BaseModel):
+    is_locked:bool

@@ -98,7 +98,7 @@ def revoke_user_access(category_id: int, revoke_access: RevokeAccess,
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail=f'Invalid access type, try: {available_access_types}!')
 
-    return f'Access type: {revoke_access.access_type.upper()} has been revoked from user with id: {revoke_access.user_id}'
+    return f'Access type: {revoke_access.access_type.upper()} with user id: {revoke_access.user_id}'
 
 
 @categories_router.get('/privileged_users/{category_id}')

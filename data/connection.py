@@ -1,16 +1,17 @@
 from mariadb import connect
 
 
-def _get_connection():
+def _get_connection(database_name='forum_system_schema'):
     try:
         conn = connect(
             user='root',
             password='123456',
             host='localhost',
             port=3306,
-            database='forum_system_schema'
+            database=database_name
+
         )
-        print("Connected to the database!")
+        print(f"Connected to the {database_name} database!")
 
         return conn
     except Exception as e:

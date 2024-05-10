@@ -7,11 +7,18 @@ from data.schemas import UserReply, ReplyOut
 
 
 def create(content: str, topic_id: int, user_id: int, category_id):
-    check_user_access = read_query('SELECT access_type from category_has_user WHERE user_id = ? AND category_id = ?', (user_id, category_id))
+    check_user_access = read_query('SELECT access_type from category_has_user WHERE user_id = ? AND category_id = ?',
+                                   (user_id, category_id))
+    if not check_user_access:
+        return None
+
     user_access = check_user_access[0][0]
 
     if user_access == 'read access':
         return f"user with id {user_id} has read only access"
+
+    if user_access == "banned":
+        return f"user with id {user_id} is banned."
 
     generated_id = insert_query(
         'INSERT INTO reply(content, topic_id) VALUES (?, ?)',
@@ -27,8 +34,35 @@ def create(content: str, topic_id: int, user_id: int, category_id):
 
 
 def change_vote_status(reply_id, vote_status, current_user_id):
-    vote_data = update_query('update votes set status = ? where reply_id = ? and user_id = ? ',
-                             (vote_status, reply_id, current_user_id))
 
-    # return True if update query was successful
-    return vote_data
+    if reply_id is None or vote_status is None or current_user_id is None:
+        return None
+
+    if vote_status not in ['upvote', 'downvote']:
+        return None
+    try:
+        # Check if the user has already voted on this reply
+        existing_vote = read_query('SELECT status FROM votes WHERE reply_id = ? AND user_id = ?',
+                                   (reply_id, current_user_id))
+        if existing_vote:
+            # If an existing vote is found, update it
+            if existing_vote[0]['status'] != vote_status:
+                vote_data = update_query('UPDATE votes SET status = ? WHERE reply_id = ? AND user_id = ?',
+                                         (vote_status, reply_id, current_user_id))
+                if vote_data:
+                    return True
+                else:
+                    return False
+            else:
+                return None
+        else:
+            vote_data = insert_query('INSERT INTO votes (reply_id, user_id, status) VALUES (?, ?, ?)',
+                                    (reply_id, current_user_id, vote_status))
+            if not vote_data:
+                return True
+            else:
+                return False
+    except Exception as e:
+        return False
+
+

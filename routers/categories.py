@@ -94,7 +94,7 @@ def revoke_user_access(category_id: int, revoke_access: RevokeAccess,
     if not revoke_access_result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Invalid operation!')
     elif revoke_access_result == 'invalid access type':
-        available_access_types = 'read access, write access, read and write access, banned'
+        available_access_types = 'read access, read and write access or banned'
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail=f'Invalid access type, try: {available_access_types}!')
 

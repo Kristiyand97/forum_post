@@ -5,12 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e5d6143b-0c63-424a-8fed-1fe2cadf1bec" name="Changes" comment="Revoke access functionality has been refactored.&#10;A new method add_category_member has been created.">
+      <change afterPath="$PROJECT_DIR$/tests/test_routers/test_categories.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/test_routers/test_messages.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/test_services/test_category_services.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/test_services/test_message_services.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_5_7_2024_6_17_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_5_7_2024_6_17_PM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/connection.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/connection.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/categories.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/categories.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/reply_services.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/reply_services.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_routers/test_replies.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_routers/test_replies.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_services/test_reply_services.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_services/test_reply_services.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,9 +53,20 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python tests.Python tests for test_categories.test_view_all_categories.executor": "Run",
+    "Python tests.Python tests for test_categories.test_view_all_categories_success.executor": "Run",
+    "Python tests.Python tests for test_messages.TestMessageRouter.test_create_message_success.executor": "Run",
+    "Python tests.Python tests for test_messages.TestMessagesRouter.test_create_message_success.executor": "Run",
+    "Python tests.Python tests for test_messages.test_create_message.executor": "Run",
     "Python tests.Python tests for test_replies.TestRepliesRouter.executor": "Run",
     "Python tests.Python tests for test_reply_services.TestReplyServices.executor": "Run",
     "Python tests.Python tests for test_users_router.TestUserRouter.executor": "Run",
+    "Python tests.Python tests in test_categories.py.executor": "Run",
+    "Python tests.Python tests in test_category_services.py.executor": "Run",
+    "Python tests.Python tests in test_messages.py.executor": "Run",
+    "Python tests.Python tests in test_replies.py.executor": "Run",
+    "Python tests.Python tests in test_reply_services.py.executor": "Run",
+    "Python tests.Python tests in test_topics.py.executor": "Run",
     "Python tests.Python tests in test_users_router.py.executor": "Run",
     "Python.main.executor": "Debug",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
@@ -62,30 +75,8 @@
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
-  <component name="RunManager" selected="Python tests.Python tests for test_replies.TestRepliesRouter">
-    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="forum_post" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Python tests for test_replies.TestRepliesRouter" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python tests.Python tests for test_messages.TestMessageRouter.test_create_message_success">
+    <configuration name="Python tests for test_messages.TestMessageRouter.test_create_message_success" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="forum_post" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -96,11 +87,41 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_replies.TestRepliesRouter&quot;" />
+      <option name="_new_target" value="&quot;test_messages.TestMessageRouter.test_create_message_success&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_reply_services.TestReplyServices" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test_messages.TestMessagesRouter.test_create_message_success" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="forum_post" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/test_routers" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_messages.TestMessagesRouter.test_create_message_success&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests in test_messages.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="forum_post" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/test_routers" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_routers/test_messages.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests in test_reply_services.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="forum_post" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -111,61 +132,46 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_reply_services.TestReplyServices&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_services/test_reply_services.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_users_router.TestUserRouter" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests in test_topics.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="forum_post" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/test_routers" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_users_router.TestUserRouter&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Python tests in test_users_router.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="forum_post" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_users_router.py&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_routers/test_topics.py&quot;" />
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.main" />
-      <item itemvalue="Python tests.Python tests for test_replies.TestRepliesRouter" />
-      <item itemvalue="Python tests.Python tests for test_users_router.TestUserRouter" />
-      <item itemvalue="Python tests.Python tests in test_users_router.py" />
-      <item itemvalue="Python tests.Python tests for test_reply_services.TestReplyServices" />
+      <item itemvalue="Python tests.Python tests for test_messages.TestMessageRouter.test_create_message_success" />
+      <item itemvalue="Python tests.Python tests for test_messages.TestMessagesRouter.test_create_message_success" />
+      <item itemvalue="Python tests.Python tests in test_messages.py" />
+      <item itemvalue="Python tests.Python tests in test_reply_services.py" />
+      <item itemvalue="Python tests.Python tests in test_topics.py" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Python tests for test_replies.TestRepliesRouter" />
-        <item itemvalue="Python tests.Python tests for test_reply_services.TestReplyServices" />
-        <item itemvalue="Python tests.Python tests for test_users_router.TestUserRouter" />
-        <item itemvalue="Python tests.Python tests in test_users_router.py" />
-        <item itemvalue="Python.main" />
+        <item itemvalue="Python tests.Python tests for test_messages.TestMessageRouter.test_create_message_success" />
+        <item itemvalue="Python tests.Python tests in test_messages.py" />
+        <item itemvalue="Python tests.Python tests for test_messages.TestMessagesRouter.test_create_message_success" />
+        <item itemvalue="Python tests.Python tests in test_reply_services.py" />
+        <item itemvalue="Python tests.Python tests in test_topics.py" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-babbdf50b680-746f403e7f0c-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.15989.155" />
+        <option value="bundled-python-sdk-50da183f06c8-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.13135.95" />
       </set>
     </attachedChunks>
   </component>
@@ -226,11 +232,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/services/message_services.py</url>
-          <line>21</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/routers/categories.py</url>
           <line>109</line>

@@ -7,7 +7,7 @@ from services import reply_services
 replies_router = APIRouter(prefix='/replies')
 
 
-@replies_router.put('/')
+@replies_router.put('/', tags=["Replies"])
 def update_vote_on_reply(update_reply: UpdateReply, current_user_id: int = Depends(authorization.get_current_user)
 
                          ):
@@ -23,7 +23,7 @@ def update_vote_on_reply(update_reply: UpdateReply, current_user_id: int = Depen
     return f"You {update_reply.status}d reply with id: {update_reply.reply_id}"
 
 
-@replies_router.post('/create', status_code=status.HTTP_201_CREATED)
+@replies_router.post('/create', status_code=status.HTTP_201_CREATED, tags=["Replies"])
 def create_reply(reply: CreateReply, current_user: int = Depends(authorization.get_current_user)):
     if current_user is None:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,

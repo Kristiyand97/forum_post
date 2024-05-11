@@ -9,7 +9,7 @@ from services import user_services
 users_router = APIRouter(prefix='/users')
 
 
-@users_router.post('/register', status_code=status.HTTP_201_CREATED, response_model=UserOut)
+@users_router.post('/register', status_code=status.HTTP_201_CREATED, response_model=UserOut, tags=["Users"])
 def register(user_create: UserCreate):
     hashed_password = get_password_hash(user_create.password)
     user_create.password = hashed_password
@@ -19,7 +19,7 @@ def register(user_create: UserCreate):
     return new_user or BadRequest(f'Username or email is already taken.')
 
 
-@users_router.post('/login')
+@users_router.post('/login', tags=["Users"])
 def login(user_credentials: UserLogin):
 
     user = services.user_services.try_login(user_credentials.email, user_credentials.password)

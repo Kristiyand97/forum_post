@@ -7,7 +7,7 @@ from services import message_services
 messages_router = APIRouter(prefix='/messages')
 
 
-@messages_router.post('/create', status_code=status.HTTP_201_CREATED)
+@messages_router.post('/create', status_code=status.HTTP_201_CREATED, tags=["Messages"])
 def create_message(message: schemas.CreateMessage, current_user: int = Depends(authorization.get_current_user)):
     if current_user is None:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
@@ -22,7 +22,7 @@ def create_message(message: schemas.CreateMessage, current_user: int = Depends(a
     return new_message
 
 
-@messages_router.get('/conversations/{receiver_id}')
+@messages_router.get('/conversations/{receiver_id}', tags=["Messages"])
 def view_conversation(receiver_id: int, current_user: int = Depends(authorization.get_current_user)):
     if current_user is None:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
@@ -31,7 +31,7 @@ def view_conversation(receiver_id: int, current_user: int = Depends(authorizatio
     return conversation
 
 
-@messages_router.get('/conversations')
+@messages_router.get('/conversations', tags=["Messages"])
 def view_conversations(current_user: int = Depends(authorization.get_current_user)):
     if current_user is None:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,

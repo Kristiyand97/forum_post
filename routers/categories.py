@@ -10,13 +10,13 @@ from services import category_services
 categories_router = APIRouter(prefix='/categories')
 
 
-@categories_router.get('/')
+@categories_router.get('/', tags=["Categories"])
 def view_all_categories():
     categories = category_services.view_all_categories()
     return categories
 
 
-@categories_router.get('/{category_id}')
+@categories_router.get('/{category_id}', tags=["Categories"])
 def view_category(category_id: int, search: str = None, sort: str = None, pagination: int = 1,
                   current_user: int = Depends(authorization.get_current_user)):
     category_with_topics = category_services.view_topics_in_category(category_id, current_user, search, sort,
@@ -40,7 +40,7 @@ def view_category(category_id: int, search: str = None, sort: str = None, pagina
     return category_with_topics
 
 
-@categories_router.post('/create', status_code=status.HTTP_201_CREATED)
+@categories_router.post('/create', status_code=status.HTTP_201_CREATED, tags=["Categories"])
 def create_category(category: CreateCategory, current_user: int = Depends(authorization.get_current_user)):
     if current_user is None:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
@@ -55,7 +55,7 @@ def create_category(category: CreateCategory, current_user: int = Depends(author
     return new_category.dict(exclude_none=True)
 
 
-@categories_router.put('/{category_id}')
+@categories_router.put('/{category_id}', tags=["Categories"])
 def change_visibility(category_id: int, change_category: schemas.ChangeCategoryVisibility,
                       current_user: int = Depends(authorization.get_current_user)):
     if current_user is None:
@@ -82,7 +82,7 @@ def change_visibility(category_id: int, change_category: schemas.ChangeCategoryV
     return ' '.join(messages)
 
 
-@categories_router.put('/revoke_access/{category_id}')
+@categories_router.put('/revoke_access/{category_id}', tags=["Categories"])
 def revoke_user_access(category_id: int, revoke_access: RevokeAccess,
                        current_user: int = Depends(authorization.get_current_user)):
     if current_user is None:
@@ -101,7 +101,7 @@ def revoke_user_access(category_id: int, revoke_access: RevokeAccess,
     return f'Access type: {revoke_access.access_type.upper()} with user id: {revoke_access.user_id}'
 
 
-@categories_router.get('/privileged_users/{category_id}')
+@categories_router.get('/privileged_users/{category_id}', tags=["Categories"])
 def view_privileged_users(category_id: int, current_user: int = Depends(authorization.get_current_user)):
     if current_user is None:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,

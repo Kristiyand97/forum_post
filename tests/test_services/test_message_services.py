@@ -1,28 +1,32 @@
 import unittest
 from unittest.mock import patch
-from data.schemas import Message
-from services.message_services import create_message
-from services.message_services import insert_query
+from fastapi.testclient import TestClient
+from main import app
 
-FAKE_INSERT_QUERY_VALUE = 1
-MESSAGE_CONTENT = 'test'
-MESSAGE_RECEIVER_ID = 1
-MESSAGE_SENDER_ID = 2
+class TestMessageRouter(unittest.TestCase):
+    def setUp(self):
+        self.client = TestClient(app)
 
+    @patch('services.message_services.create_message')
+    @patch('common.authorization.get_current_user', return_value=1)
+    def test_create_message(self, mock_get_current_user, mock_create_message):
+        mock_create_message.return_value = {"content": "Hello", "receiver_id": 2, "sender_id": 1}
+        response = self.client.post("/messages/create", json={"content": "Hello", "receiver_id": 2})
+        self.assertEqual(response.status_code, 201)
 
-class TestMessageServices(unittest.TestCase):
-    @patch('services.message_services.insert_query')
-    def test_create_message_correctly(self, mocked_insert_query):
-        mocked_insert_query.return_value = FAKE_INSERT_QUERY_VALUE
+    @patch('services.message_services.get_conversation_with_user')
+    @patch('common.authorization.get_current_user', return_value=1)
+    def test_view_conversation(self, mock_get_current_user, mock_get_conversation_with_user):
+        mock_get_conversation_with_user.return_value = [{"content": "Hello", "receiver_id": 2, "sender_id": 1}]
+        response = self.client.get("/messages/conversations/2")
+        self.assertEqual(response.status_code, 200)
 
-        result = create_message(MESSAGE_CONTENT, MESSAGE_RECEIVER_ID, MESSAGE_SENDER_ID)
-
-        self.assertIsInstance(result, Message)
-        self.assertEqual(result.id, FAKE_INSERT_QUERY_VALUE)
-        self.assertEqual(result.content, MESSAGE_CONTENT)
-        self.assertEqual(result.sender_id, MESSAGE_SENDER_ID)
-        self.assertEqual(result.receiver_id, MESSAGE_RECEIVER_ID)
-
-
-if __name__ == '__main__':
-    unittest.main()
+    @patch('services.message_services.get_conversations')
+    @patch('common.authorization.get_current_user', return_value=1)
+    def test_view_conversations(self, mock_get_current_user, mock_get_conversations):
+        mock_get_conversations.return_value = [
+            {"content": "Hello", "receiver_id": 2, "sender_id": 1},
+            {"content": "Hi", "receiver_id": 3, "sender_id": 1}
+        ]
+        response = self.client.get("/messages/conversations")
+        self.assertEqual(response.status_code, 200)

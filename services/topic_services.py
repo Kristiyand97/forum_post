@@ -116,3 +116,6 @@ def lock_topic(topic_id: int, is_locked: bool, current_user: int):
         return 'not valid topic'
 
     return lock_topic_data
+
+
+

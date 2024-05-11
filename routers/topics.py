@@ -7,7 +7,7 @@ from services import topic_services
 topics_router = APIRouter(prefix='/topics')
 
 
-@topics_router.get('/')
+@topics_router.get('/', tags=["Topics"])
 def get_all_topics(search: str = None, sort: str = None, pagination: int = 1):
     topics_result = topic_services.get_all_topics(search, sort, pagination)
 
@@ -23,7 +23,7 @@ def get_all_topics(search: str = None, sort: str = None, pagination: int = 1):
     return topics_result
 
 
-@topics_router.get('/{topic_id}')
+@topics_router.get('/{topic_id}', tags=["Topics"])
 def get_topic_by_id(topic_id: int):
     topic_result = topic_services.get_topic_by_id(topic_id)
 
@@ -33,7 +33,7 @@ def get_topic_by_id(topic_id: int):
     return topic_result
 
 
-@topics_router.post('/create', status_code=status.HTTP_201_CREATED)
+@topics_router.post('/create', status_code=status.HTTP_201_CREATED, tags=["Topics"])
 def create_topic(topic: schemas.TopicCreate, current_user: int = Depends(authorization.get_current_user)):
     if current_user is None:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
@@ -50,7 +50,7 @@ def create_topic(topic: schemas.TopicCreate, current_user: int = Depends(authori
     return new_topic.dict(exclude_none=True)
 
 
-@topics_router.put('/{topic_id}')
+@topics_router.put('/{topic_id}', tags=["Topics"])
 def update_best_reply(topic_id: int, best_reply: schemas.BestReply,
                       owner_id: int = Depends(authorization.get_current_user)):
     if owner_id is None:
@@ -65,7 +65,7 @@ def update_best_reply(topic_id: int, best_reply: schemas.BestReply,
     return f"Best reply was set successfully on topic with id: {topic_id}!"
 
 
-@topics_router.put('/lock/{topic_id}')
+@topics_router.put('/lock/{topic_id}', tags=["Topics"])
 def lock_topic(topic_id: int, is_locked: schemas.LockTopic,
                current_user: int = Depends(authorization.get_current_user)):
     if current_user is None:

@@ -75,7 +75,7 @@
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
-  <component name="RunManager" selected="Python tests.Python tests for test_messages.TestMessageRouter.test_create_message_success">
+  <component name="RunManager" selected="Python tests.Python tests in test_message_services.py">
     <configuration name="Python tests for test_messages.TestMessageRouter.test_create_message_success" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="forum_post" />
       <option name="ENV_FILES" value="" />
@@ -104,6 +104,21 @@
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;test_messages.TestMessagesRouter.test_create_message_success&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests in test_message_services.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="forum_post" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/test_services" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_services/test_message_services.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
     <configuration name="Python tests in test_messages.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
@@ -136,35 +151,20 @@
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests in test_topics.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="forum_post" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/test_routers" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_routers/test_topics.py&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
-      <method v="2" />
-    </configuration>
     <list>
       <item itemvalue="Python tests.Python tests for test_messages.TestMessageRouter.test_create_message_success" />
       <item itemvalue="Python tests.Python tests for test_messages.TestMessagesRouter.test_create_message_success" />
+      <item itemvalue="Python tests.Python tests in test_message_services.py" />
       <item itemvalue="Python tests.Python tests in test_messages.py" />
       <item itemvalue="Python tests.Python tests in test_reply_services.py" />
-      <item itemvalue="Python tests.Python tests in test_topics.py" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Python tests for test_messages.TestMessageRouter.test_create_message_success" />
+        <item itemvalue="Python tests.Python tests in test_message_services.py" />
         <item itemvalue="Python tests.Python tests in test_messages.py" />
+        <item itemvalue="Python tests.Python tests for test_messages.TestMessageRouter.test_create_message_success" />
         <item itemvalue="Python tests.Python tests for test_messages.TestMessagesRouter.test_create_message_success" />
         <item itemvalue="Python tests.Python tests in test_reply_services.py" />
-        <item itemvalue="Python tests.Python tests in test_topics.py" />
       </list>
     </recent_temporary>
   </component>

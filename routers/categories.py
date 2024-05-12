@@ -17,7 +17,7 @@ def view_all_categories():
 
 
 @categories_router.get('/{category_id}', tags=["Categories"])
-def view_category(category_id: int, search: str = None, sort: str = None, pagination: int = 1,
+def view_category(category_id: int, search: str = None, sort: str = None, pagination: int = 0,
                   current_user: int = Depends(authorization.get_current_user)):
     category_with_topics = category_services.view_topics_in_category(category_id, current_user, search, sort,
                                                                      pagination)

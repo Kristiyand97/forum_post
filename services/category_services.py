@@ -7,10 +7,13 @@ def view_all_categories():
     return (ViewCategory(id=id, name=name, created_at=created_at) for id, name, created_at in category_data)
 
 
-def view_topics_in_category(category_id: int, current_user, search: str = None, sort: str = None, pagination: int = 1):
-    page_size = 10
-    pages_offset = (pagination - 1) * page_size
-
+def view_topics_in_category(category_id: int, current_user, search: str = None, sort: str = None, pagination: int = 0):
+    if pagination > 0:
+        page_size = 10
+        pages_offset = (pagination - 1) * page_size
+    else:
+        page_size = 10
+        pages_offset = 0
     category_data = read_query('select id,is_private from category where id=?',
                                sql_params=(category_id,))
 

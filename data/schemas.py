@@ -32,7 +32,7 @@ class TokenData(BaseModel):
 class TopicCreate(BaseModel):
     name: str
     category_id: int
-    best_reply_id: Optional[int] = None
+
 
 
 class Topic(BaseModel):

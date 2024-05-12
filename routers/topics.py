@@ -28,7 +28,7 @@ def get_topic_by_id(topic_id: int):
     topic_result = topic_services.get_topic_by_id(topic_id)
 
     if topic_result == 'wrong topic id':
-        raise HTTPException(status_code=404, detail=f"Topic with id: {topic_result} does not exist!")
+        raise HTTPException(status_code=404, detail=f"Topic with id: {topic_id} does not exist!")
 
     return topic_result
 

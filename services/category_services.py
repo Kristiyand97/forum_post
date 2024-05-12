@@ -1,5 +1,6 @@
 from data.database_queries import insert_query, update_query, read_query
-from data.schemas import CreateCategory, CategoryOut, ViewCategory, ViewTopicsInCategory, ChangeCategoryVisibility,ViewPrivilegedUser
+from data.schemas import CreateCategory, CategoryOut, ViewCategory, ViewTopicsInCategory, ChangeCategoryVisibility, \
+    ViewPrivilegedUser
 
 
 def view_all_categories():
@@ -110,7 +111,12 @@ def change_visibility(category_id: int, is_private: bool, is_locked: bool, curre
     }
 
 
-def revoke_access(category_id: int, user_id: int, access_type: str):
+def revoke_access(category_id: int, user_id: int, access_type: str, current_user: int):
+    is_admin_data = read_query('select is_admin from user where id= ?', (current_user,))
+    is_admin = is_admin_data[0][0]
+    if not is_admin:
+        return 'not admin'
+
     access_type_params = ['read access', 'read and write access', 'banned']
 
     if access_type not in access_type_params:

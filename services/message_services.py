@@ -26,4 +26,8 @@ def get_conversations(current_user: int):
 
 def get_conversation_with_user(receiver_id: int, current_user):
     messages = read_query('SELECT * FROM messages WHERE receiver_id = ? AND sender_id = ?', (receiver_id, current_user))
+
+    if not messages:
+        return 'invalid receiver'
+
     return (ViewConversation.from_query_result(*message) for message in messages)

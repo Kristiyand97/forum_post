@@ -32,6 +32,16 @@ def create_reply(reply: CreateReply, current_user: int = Depends(authorization.g
 
     if new_reply is None:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="The reply could not be created.")
+    if new_reply == 'invalid topic and category':
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail=f'Topic with id:{reply.topic_id} and category with id: {reply.category_id} does '
+                                   f'NOT exist!')
+    elif new_reply == 'invalid topic':
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail=f'Topic with id: {reply.topic_id} does NOT exist!')
+    elif new_reply == 'invalid category':
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail=f'Category with id: {reply.category_id} does NOT exist!')
     if isinstance(new_reply, str):
         return new_reply
 

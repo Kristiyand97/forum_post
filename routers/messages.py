@@ -28,6 +28,9 @@ def view_conversation(receiver_id: int, current_user: int = Depends(authorizatio
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
                             detail="User ID not found. User may not be authenticated.")
     conversation = message_services.get_conversation_with_user(receiver_id, current_user)
+    if conversation == 'invalid receiver':
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f'Receiver with id: {receiver_id} is NOT found!')
     return conversation
 
 

@@ -7,6 +7,15 @@ from data.schemas import UserReply, ReplyOut
 
 
 def create(content: str, topic_id: int, user_id: int, category_id):
+    topic_data = read_query('select id from topic where id = ?', (topic_id,))
+    category_data = read_query('select id from category where id=?', (category_id,))
+    if not topic_data and not category_data:
+        return 'invalid topic and category'
+    elif not topic_data:
+        return 'invalid topic'
+    elif not category_data:
+        return 'invalid category'
+
     check_user_access = read_query('SELECT access_type from category_has_user WHERE user_id = ? AND category_id = ?',
                                    (user_id, category_id))
     if not check_user_access:
@@ -34,7 +43,6 @@ def create(content: str, topic_id: int, user_id: int, category_id):
 
 
 def change_vote_status(reply_id, vote_status, current_user_id):
-
     if reply_id is None or vote_status is None or current_user_id is None:
         return None
 
@@ -43,7 +51,7 @@ def change_vote_status(reply_id, vote_status, current_user_id):
     try:
         # Check if the user has already voted on this reply
         existing_vote_data = read_query('SELECT status FROM votes WHERE reply_id = ? AND user_id = ?',
-                                   (reply_id, current_user_id))
+                                        (reply_id, current_user_id))
         existing_vote = existing_vote_data[0][0]
         if existing_vote:
             # If an existing vote is found, update it
@@ -58,7 +66,7 @@ def change_vote_status(reply_id, vote_status, current_user_id):
                 return None
         else:
             vote_data = update_query('update votes set status = ? where reply_id = ? and user_id = ?',
-                                    (vote_status, reply_id, current_user_id))
+                                     (vote_status, reply_id, current_user_id))
             if vote_data:
                 return True
             else:

@@ -57,13 +57,11 @@ def change_vote_status(reply_id, vote_status, current_user_id):
             else:
                 return None
         else:
-            vote_data = insert_query('INSERT INTO votes (reply_id, user_id, status) VALUES (?, ?, ?)',
-                                    (reply_id, current_user_id, vote_status))
-            if not vote_data:
+            vote_data = update_query('update votes set status = ? where reply_id = ? and user_id = ?',
+                                    (vote_status, reply_id, current_user_id))
+            if vote_data:
                 return True
             else:
                 return False
     except Exception as e:
         return False
-
-

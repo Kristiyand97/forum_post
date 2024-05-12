@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="e5d6143b-0c63-424a-8fed-1fe2cadf1bec" name="Changes" comment="Tags were added to all routers parameters for better Swagger UI organization.&#10;&#10;Unit tests for topic router and topic_services have been added.">
+=======
+    <list default="true" id="e5d6143b-0c63-424a-8fed-1fe2cadf1bec" name="Changes" comment="Change vote status logic has been changed.&#10;Unit tests for reply (services and router) have been implemented">
+>>>>>>> 1c59ae61ea7fd1a770c9fa4e09d288d29e6bb116
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_services/test_message_services.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_services/test_message_services.py" afterDir="false" />
@@ -45,24 +49,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python tests.Python tests for test_replies.TestRepliesRouter.executor": "Run",
-    "Python tests.Python tests for test_reply_services.TestReplyServices.executor": "Run",
-    "Python tests.Python tests for test_topic_services.TestTopicServices.executor": "Run",
-    "Python tests.Python tests for test_topic_services.TestTopicServices.test_create.executor": "Run",
-    "Python tests.Python tests for test_topics.TestTopicsRouter.executor": "Run",
-    "Python tests.Python tests for test_topics.TestTopicsRouter.test_create_topic_not_authenticated.executor": "Run",
-    "Python tests.Python tests for test_topics.TestTopicsRouter.test_get_all_topics_invalid_page.executor": "Run",
-    "Python tests.Python tests for test_users_router.TestUserRouter.executor": "Run",
-    "Python tests.Python tests in test_users_router.py.executor": "Run",
-    "Python.main.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python tests.Python tests for test_replies.TestRepliesRouter.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_reply_services.TestReplyServices.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_topic_services.TestTopicServices.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_topic_services.TestTopicServices.test_create.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_topics.TestTopicsRouter.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_topics.TestTopicsRouter.test_create_topic_not_authenticated.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_topics.TestTopicsRouter.test_get_all_topics_invalid_page.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_users_router.TestUserRouter.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_users_router.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Python.main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="forum_post" />
@@ -166,7 +170,11 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
+<<<<<<< HEAD
         <option value="bundled-python-sdk-babbdf50b680-746f403e7f0c-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.15989.155" />
+=======
+        <option value="bundled-python-sdk-50da183f06c8-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.13135.95" />
+>>>>>>> 1c59ae61ea7fd1a770c9fa4e09d288d29e6bb116
       </set>
     </attachedChunks>
   </component>

@@ -5,7 +5,7 @@ def _get_connection(database_name='forum_system_schema'):
     try:
         conn = connect(
             user='root',
-            password='1234',
+            password='2210',
             host='localhost',
             port=3306,
             database=database_name

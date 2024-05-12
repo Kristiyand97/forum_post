@@ -42,11 +42,12 @@ def change_vote_status(reply_id, vote_status, current_user_id):
         return None
     try:
         # Check if the user has already voted on this reply
-        existing_vote = read_query('SELECT status FROM votes WHERE reply_id = ? AND user_id = ?',
+        existing_vote_data = read_query('SELECT status FROM votes WHERE reply_id = ? AND user_id = ?',
                                    (reply_id, current_user_id))
+        existing_vote = existing_vote_data[0][0]
         if existing_vote:
             # If an existing vote is found, update it
-            if existing_vote[0]['status'] != vote_status:
+            if existing_vote != vote_status:
                 vote_data = update_query('UPDATE votes SET status = ? WHERE reply_id = ? AND user_id = ?',
                                          (vote_status, reply_id, current_user_id))
                 if vote_data:
